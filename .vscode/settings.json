@@ -4,6 +4,12 @@
         "*.tcc": "c",
         "memory_resource": "c",
         "random": "c",
-        "limits": "c"
+        "limits": "c",
+        "typeinfo": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "system_error": "c"
     }
 }

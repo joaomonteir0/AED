@@ -82,10 +82,91 @@ void tree_insert(tree_node_t ** tree, char *val)
     }
 }
 */
-void tree_insert(tree_node_t * tree, tree_node_t *val){
-  printf("%s\n",&val->name);
-  printf("%s\n",&val->zip_code);
-  printf("%s\n",&val->telephone_number);
+void tree_insert(tree_node_t ** tree, tree_node_t *val, int index){
+  tree_node_t *temp = NULL;
+  
+  if(index == 0){
+    if(!(*tree)){
+      temp = (tree_node_t*)malloc(sizeof(tree_node_t));
+      temp->left[0] = temp->right[0] = NULL;
+      strcpy(temp->name, &val->name);
+      *tree = temp;
+      return;
+    }
+    int comp = strcmp(&(*tree)->name, &val->name);
+    if(comp > 0){
+      printf("%s < %s ==> vai para a esquerda %d \n",&val->name, &(*tree)->name,(strcmp(&(*tree)->name, &val->name)));
+      tree_insert(&(*tree)->left[0], val, index);
+      
+    } if(comp < 0){
+      printf("%s > %s ==> vai para a direita %d \n",&val->name, &(*tree)->name,(strcmp(&(*tree)->name, &val->name)));
+      tree_insert(&(*tree)->right[0], val->name, index);
+    }
+  }
+  if (index == 1)
+  {
+    if(!(*tree)){
+      temp = (tree_node_t*)malloc(sizeof(tree_node_t));
+      temp->left[1] = temp->right[1] = NULL;
+      strcpy(temp->zip_code, &val->zip_code);
+      *tree = temp;
+      return;
+    }
+    int comp = strcmp(&(*tree)->zip_code, &val->zip_code);
+    if(comp > 0){
+      printf("%s < %s ==> vai para a esquerda %d \n",&val->zip_code, &(*tree)->zip_code,(strcmp(&(*tree)->zip_code, &val->zip_code)));
+      tree_insert(&(*tree)->left[1], val, index);
+      
+    } if(comp < 0){
+      printf("%s > %s ==> vai para a direita %d \n",&val->zip_code, &(*tree)->zip_code,(strcmp(&(*tree)->zip_code, &val->zip_code)));
+      tree_insert(&(*tree)->right[1], val->zip_code, index);
+    }
+  }
+  
+  if (index == 2)
+  {
+    if(!(*tree)){
+      temp = (tree_node_t*)malloc(sizeof(tree_node_t));
+      temp->left[2] = temp->right[2] = NULL;
+      strcpy(temp->telephone_number, &val->telephone_number);
+      *tree = temp;
+      return;
+    }
+    /*char phone[MAX_TELEPHONE_NUMBER_SIZE+1],phone_val[MAX_TELEPHONE_NUMBER_SIZE+1];
+    strcpy(phone, &val->telephone_number);
+    strcpy(phone_val, &(*tree)->telephone_number);
+    int c = 0, j = 0, d = 0, f = 0;
+    do{
+      if(phone[c]!=' '){
+        phone[j++]=phone[c];
+      }
+      if(phone_val[d]!=' '){
+        phone_val[f++]=phone_val[d];
+      }
+      c++;
+      d++;
+    }while(phone[c]!='\0');
+    phone[j]='\0';
+    phone_val[f]='\0';
+
+    //int comp = strcmp(&(*tree)->telephone_number, &val->telephone_number);
+    //printf("comp: %d", comp);
+    if(strcmp(phone, phone_val) < 0){
+      printf("%s < %s ==> vai para a esquerda %d \n",&val->telephone_number, &(*tree)->telephone_number,(strcmp(&(*tree)->telephone_number, &val->telephone_number)));
+      tree_insert(&(*tree)->left[2], val, index);
+      
+    } if(strcmp(phone, phone_val) > 0){
+      printf("%s > %s ==> vai para a direita %d \n",&val->telephone_number, &(*tree)->telephone_number,(strcmp(&(*tree)->telephone_number, &val->telephone_number)));
+      tree_insert(&(*tree)->right[2], val->telephone_number, index);
+    }*/
+    int comp = strcmp(&(*tree)->telephone_number, &val->telephone_number);
+    if(comp > 0){
+      tree_insert(&(*tree)->left[2], val, index);
+      
+    } if(comp < 0){
+      tree_insert(&(*tree)->right[2], val->telephone_number, index);
+    }
+  }
 }
 
 //
@@ -168,14 +249,10 @@ int main(int argc,char **argv)
   for(int main_index = 0;main_index < 3;main_index++)
     roots[main_index] = NULL;
   for(int i = 0;i < n_persons;i++){
-    printf("\nTratamento de dados persons[%d]\n", i);
-    printf("%s\n",persons[i].name);
-    printf("%s\n",persons[i].zip_code);
-    printf("%s\n",persons[i].telephone_number);
     for(int main_index = 0;main_index < 3;main_index++){
-      printf("inserindo em roots[%d] dados\n", main_index);
-      tree_insert(roots[main_index],&(persons[i]));
+      tree_insert(&(roots[main_index]),&(persons[i]),main_index); // passar como argumento a root e a index em que está
     }
+    printf("\n");
   }
   dt = cpu_time() - dt;
   printf("Tree creation time (%d persons): %.3es\n",n_persons,dt);
