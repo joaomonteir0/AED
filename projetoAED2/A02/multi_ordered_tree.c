@@ -149,7 +149,7 @@ int list(tree_node_t * tree, int index)
 }
 
 void print_tree(tree_node_t * tree, int index){
-    print_tree(tree->left[index], index);
+    print_tree(tree->left[index], index );
     printf(" name --------------- %s\n",tree->name);
     print_tree(tree->right[index], index);
   }
@@ -259,6 +259,9 @@ int main(int argc,char **argv)
       printf("OI OI OIO IO \n");
       (void)print_tree(roots[main_index], main_index);
     }*/
+    else{
+      printf("inserted -> %s \n",argv[3]);
+    }
   }
   // clean up --- don't forget to test your program with valgrind, we don't want any memory leaks
   free(persons);
