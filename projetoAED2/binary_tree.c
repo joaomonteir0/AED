@@ -1,33 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <iostream>
 
 typedef struct tree_node_s
 {
     int data;                  // index 0 data item
-    struct tree_node_s *left;  // left pointers (one for each index) ---- left means smaller
-    struct tree_node_s *right; // right pointers (one for each index) --- right means larger
-} tree_node_t;
+    tree_node_s *left;  // left pointers (one for each index) ---- left means smaller
+    tree_node_s* right; // right pointers (one for each index) --- right means larger
+};
 
-struct tree_node_s GetNewNode(int val)
+tree_node_s* GetNewNode(int data)
 {
-    struct tree_node_s *newNode;
-    newNode->data = val;
+    tree_node_s* newNode = new tree_node_s();
+    if(!NewNode){
+        printf("memory error\n");
+        return NULL;
+    }
+    newNode->data = data;
     newNode->left = newNode->right = NULL;
-    return *newNode;
+    return newNode;
 }
 
-void tree_insert(struct tree_node_s **root, int val) // primeira função a ser feita
+tree_node_s* tree_insert(tree_node_s *root, int data) // primeira função a ser feita
 {
-    if (*root == NULL)
+    if (root == NULL)
     {
-        *root = GetNewNode(val);
+        root = GetNewNode(data);
     }
-    int buceta;
-    if (buceta == 0)
-    {
-        cona;
-    }
+    queue<tree_node_s*> q;
+    q.push(root);
 }
 
 void main()

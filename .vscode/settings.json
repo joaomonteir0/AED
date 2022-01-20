@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "*.tcc": "c",
+        "memory_resource": "c",
+        "random": "c",
+        "limits": "c"
+    }
+}
