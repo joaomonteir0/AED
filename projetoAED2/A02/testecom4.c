@@ -24,9 +24,8 @@ typedef struct tree_node_s
   char name[MAX_NAME_SIZE + 1];                         // index 0 data item
   char zip_code[MAX_ZIP_CODE_SIZE + 1];                 // index 1 data item
   char telephone_number[MAX_TELEPHONE_NUMBER_SIZE + 1]; // index 2 data item
-  char social_security_number[MAX_SOCIAL_SECURITY_SIZE + 1]; // index 3 data item
-  struct tree_node_s *left[4];                          // left pointers (one for each index) ---- left means smaller
-  struct tree_node_s *right[4];                         // right pointers (one for each index) --- right means larger
+  struct tree_node_s *left[3];                          // left pointers (one for each index) ---- left means smaller
+  struct tree_node_s *right[3];                         // right pointers (one for each index) --- right means larger
 }
 tree_node_t;
 
@@ -49,7 +48,7 @@ int compare_tree_nodes(tree_node_t *node1,tree_node_t *node2,int main_idx)
       c = strcmp(node1->telephone_number,node2->telephone_number);
     if(c != 0)
       return c; // different on this index, so return
-    main_idx = (main_idx == 3) ? 0 : main_idx + 1; // advance to the next index
+    main_idx = (main_idx == 2) ? 0 : main_idx + 1; // advance to the next index
   }
   return 0;
 }
@@ -113,7 +112,7 @@ tree_node_t *find(tree_node_t * tree, tree_node_t * val, int index)
 }
 
 //
-// tree depth
+// tree depdth
 //
 
 int tree_depth(tree_node_t *tree, int index)
@@ -144,18 +143,17 @@ int list(tree_node_t * tree, int index)
     printf(" name --------------- %s\n",tree->name);
     printf(" zip code ----------- %s\n",tree->zip_code);
     printf(" telephone number --- %s\n",tree->telephone_number);
-    printf(" social security  --- %s\n",tree->social_security_number);
     list(tree->right[index], index);
   }
   return EXIT_SUCCESS;
 }
-/*
+
 void print_tree(tree_node_t * tree, int index){
     print_tree(tree->left[index], index );
     printf(" name --------------- %s\n",tree->name);
     print_tree(tree->right[index], index);
   }
-*/
+
 //
 // main program
 //
@@ -198,26 +196,25 @@ int main(int argc,char **argv)
     random_name(&(persons[i].name[0]));
     random_zip_code(&(persons[i].zip_code[0]));
     random_telephone_number(&(persons[i].telephone_number[0]));
-    random_social_security(&(persons[i].social_security_number[0]));
-    for(int j = 0;j < 4;j++)
+    for(int j = 0;j < 3;j++)
       persons[i].left[j] = persons[i].right[j] = NULL; // make sure the pointers are initially NULL
   }
 
   // create the ordered binary trees
   dt = cpu_time();
-  tree_node_t *roots[4]; // three indices, three roots
-  for(int main_index = 0;main_index < 4;main_index++)
+  tree_node_t *roots[3]; // three indices, three roots
+  for(int main_index = 0;main_index < 3;main_index++)
     roots[main_index] = NULL;
   for(int i = 0;i < n_persons;i++){
-    for(int main_index = 0;main_index < 4;main_index++){
+    for(int main_index = 0;main_index < 3;main_index++){
       tree_insert(&(roots[main_index]),&(persons[i]),main_index); // passar como argumento a root e a index em que está
     }
   }
   dt = cpu_time() - dt;
-  printf("Tree creation time (%d persons): %0.12f s\n",n_persons,dt);
+  printf("Tree creation time (%d persons): %.3es\n",n_persons,dt);
   
   // search the tree
-  for(int main_index = 0;main_index < 4;main_index++)
+  for(int main_index = 0;main_index < 3;main_index++)
   {
     dt = cpu_time();
     for(int i = 0;i < n_persons;i++)
@@ -230,16 +227,16 @@ int main(int argc,char **argv)
       }
     }
     dt = cpu_time() - dt;
-    printf("Tree search time (%d persons, index %d): %0.12f s\n",n_persons,main_index,dt);
+    printf("Tree search time (%d persons, index %d): %.3es\n",n_persons,main_index,dt);
   }
   
   // compute the largest tree depdth
-  for(int main_index = 0;main_index < 4;main_index++)
+  for(int main_index = 0;main_index < 3;main_index++)
   {
     dt = cpu_time();
     int depth = tree_depth(roots[main_index], main_index); // place your code here to compute the depth of the tree with number main_index
     dt = cpu_time() - dt;
-    printf("Tree depth for index %d: %d (done in %0.12f s)\n",main_index,depth,dt);
+    printf("Tree depth for index %d: %d (done in %.3es)\n",main_index,depth,dt);
   }
   
   //------------------------
@@ -251,8 +248,8 @@ int main(int argc,char **argv)
       int main_index = atoi(&(argv[i][5]));
       if(main_index < 0)
         main_index = 0;
-      if(main_index > 3)
-        main_index = 3;
+      if(main_index > 2)
+        main_index = 2;
       printf("List of persons:\n");
       (void)list(roots[main_index], main_index); // place your code here to traverse, in order, the tree with number main_index
     }
@@ -262,6 +259,9 @@ int main(int argc,char **argv)
       printf("OI OI OIO IO \n");
       (void)print_tree(roots[main_index], main_index);
     }*/
+    else{
+      printf("inserted -> %s \n",argv[3]);
+    }
   }
   // clean up --- don't forget to test your program with valgrind, we don't want any memory leaks
   free(persons);
