@@ -8,6 +8,8 @@
 ## Divisão
 - ProjetoAED(N) - pasta do projeto resolvido, sendo N o número do projeto;
 
+## Final Grade: 17
+
 ## Autor
 - [@joaomonteir0](https://www.github.com/joaomonteir0) - joao.mont@ua.pt
 
